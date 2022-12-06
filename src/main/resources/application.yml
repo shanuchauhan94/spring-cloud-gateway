@@ -1,0 +1,22 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: cartModule
+          uri: http://127.0.0.1:9091/
+          predicates:
+            - Path=/cart/**
+        - id: itemModule
+          uri: http://127.0.0.1:9092/ # problem: to add all related running port here
+          predicates:
+            - Path=/item/**
+          filters:
+            - name: RequestSize
+              args:
+                MaxSize: 500000
+
